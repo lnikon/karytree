@@ -1,24 +1,31 @@
 #pragma once
+#include <cassert>
 #include <memory>
 #include <vector>
-#include <cassert>
 
 template <class T>
 class KTree final {
  public:
-  class Node {
-    std::vector<Node> m_childs{};
+  struct Node {
+    std::vector<std::shared_ptr<Node>> m_childs{};
 
     Node() {}
+
+    size_t getChildsNumber() { return m_childs.size(); }
   };
 
-  KTree(int nodesPerLevel = 0) : m_nodesPerLevel(nodesPerLevel) {
+  KTree(size_t nodesPerLevel = 0) : m_nodesPerLevel(nodesPerLevel) {
     assert(nodesPerLevel >= 0);
 
-    m_root.m_childs.resize(m_nodesPerLevel);
+    m_root = std::make_shared<Node>();
+    m_root->m_childs.resize(m_nodesPerLevel);
+  }
+
+  const auto getRoot() const {
+    return m_root;
   }
 
  private:
   std::shared_ptr<Node> m_root{};
-  static const int m_nodesPerLevel{0};
+  const size_t m_nodesPerLevel{0};
 };
