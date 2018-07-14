@@ -7,11 +7,12 @@ template <class T>
 class KTree final {
  public:
   struct Node {
-    std::vector<std::shared_ptr<Node>> m_childs{};
+    std::vector<std::shared_ptr<Node>> m_siblings{};
 
-    Node(size_t nodesPerLevel = 0) { m_childs.reserve(nodesPerLevel); }
+    Node(size_t nodesPerLevel = 0) { m_siblings.reserve(nodesPerLevel); }
 
-    size_t getChildsNumber() { return m_childs.size(); }
+    size_t getChildsNumber() { return m_siblings.size(); }
+
   };
 
   KTree(size_t nodesPerLevel = 0) {
